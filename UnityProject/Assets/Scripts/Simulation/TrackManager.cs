@@ -233,6 +233,17 @@ public class TrackManager : MonoBehaviour
         SecondBestCar = null;
     }
 
+    ///// <summary>
+    ///// Removes all car game objects from Track Manager
+    ///// </summary>
+    //public void RemoveAllCars()
+    //{
+    //    foreach (RaceCar car in cars)
+    //    {
+    //        Destroy(car.Car.gameObject);
+    //    }
+    //}
+
     /// <summary>
     /// Returns an Enumerator for iterator through all cars currently on the track.
     /// </summary>

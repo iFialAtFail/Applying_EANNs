@@ -11,6 +11,7 @@ using UnityEngine;
 /// </summary>
 public class CarController : MonoBehaviour
 {
+
     #region Members
     #region IDGenerator
     // Used for unique ID generation
@@ -25,8 +26,13 @@ public class CarController : MonoBehaviour
     #endregion
 
     // Maximum delay in seconds between the collection of two checkpoints until this car dies.
-    private const float MAX_CHECKPOINT_DELAY = 7;
-
+    [SerializeField]
+    private float MAX_CHECKPOINT_DELAY = 7;
+    private static bool shouldDieFromWallHit = true;
+    [SerializeField]
+    private float penaltyForHittingWall = 0.5f;
+    [SerializeField]
+    private bool wallHitCausesPenalty = false;
     /// <summary>
     /// The underlying AI agent of this car.
     /// </summary>
@@ -87,7 +93,7 @@ public class CarController : MonoBehaviour
     }
     void Start()
     {
-        Movement.HitWall += Die;
+        Movement.HitWall += DieFromWallHit;
 
         //Set name to be unique
         this.name = "Car (" + NextID + ")";
@@ -150,9 +156,26 @@ public class CarController : MonoBehaviour
         Agent.Kill();
     }
 
+    public void DieFromWallHit()
+    {
+        if (shouldDieFromWallHit)
+        {
+            Die();
+        }
+        else if (wallHitCausesPenalty)
+        {
+            Agent.Genotype.Evaluation -= penaltyForHittingWall;
+        }
+    }
+
     public void CheckpointCaptured()
     {
         timeSinceLastCheckpoint = 0;
+    }
+
+    public static void SetShouldDieFromWallHit(bool value)
+    {
+        shouldDieFromWallHit = value;
     }
     #endregion
 }

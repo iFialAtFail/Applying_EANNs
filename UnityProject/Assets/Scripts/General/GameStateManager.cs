@@ -4,6 +4,8 @@
 #region Includes
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
+using System.Reflection;
 #endregion
 
 /// <summary>
@@ -19,6 +21,8 @@ public class GameStateManager : MonoBehaviour
     // The name of the track to be loaded
     [SerializeField]
     public string TrackName;
+
+    public string NewTrackName;
 
     /// <summary>
     /// The UIController object.
@@ -75,4 +79,37 @@ public class GameStateManager : MonoBehaviour
             UIController.SetDisplayTarget(bestCar);
     }
     #endregion
+
+    bool shouldDieFromWallHit = true;
+    public void ChangeCarKillBool()
+    {
+        CarController.SetShouldDieFromWallHit(shouldDieFromWallHit);
+        shouldDieFromWallHit = !shouldDieFromWallHit;
+    }
+
+    public void ChangeTrackScene()
+    {
+        if (NewTrackName != TrackName)
+        {
+            //TrackManager.Instance.RemoveAllCars();
+            SceneManager.UnloadSceneAsync(TrackName);
+            SceneManager.UnloadSceneAsync("GUI");
+
+            //Load track
+            SceneManager.LoadScene(NewTrackName, LoadSceneMode.Additive);
+            TrackName = NewTrackName;
+            NewTrackName = "";
+            
+            //Reload gui for current track
+            SceneManager.LoadScene("GUI", LoadSceneMode.Additive);
+
+        }
+    }
+
+
+    [InspectorButton("ChangeTrackScene", ButtonWidth = 200f)]
+    public bool updateTrackScene;
+
+    [InspectorButton("ChangeCarKillBool", ButtonWidth =200f)]
+    public bool changeCarKillBool;
 }

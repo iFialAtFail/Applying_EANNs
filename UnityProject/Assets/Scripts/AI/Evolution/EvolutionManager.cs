@@ -26,6 +26,7 @@ public class EvolutionManager : MonoBehaviour
     // Whether or not the results of each generation shall be written to file, to be set in Unity Editor
     [SerializeField]
     private bool SaveStatistics = false;
+    [SerializeField]
     private string statisticsFileName;
 
     // How many of the first to finish the course should be saved to file, to be set in Unity Editor
