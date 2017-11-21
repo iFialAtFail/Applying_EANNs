@@ -117,6 +117,12 @@ public class GeneticAlgorithm
 
     private List<Genotype> currentPopulation;
 
+    public static int IntermediatePopulationSelectionSize
+    {
+        get;
+        set;
+    }
+
     /// <summary>
     /// The amount of genotypes in a population.
     /// </summary>
@@ -296,6 +302,28 @@ public class GeneticAlgorithm
         intermediatePopulation.Add(currentPopulation[0]);
         intermediatePopulation.Add(currentPopulation[1]);
         intermediatePopulation.Add(currentPopulation[2]);
+
+        return intermediatePopulation;
+    }
+
+    /// <summary>
+    /// Selects a user defined number ofthe best genotypes of the current population and copies them to the intermediate population.
+    /// </summary>
+    /// <param name="currentPopulation">The current population.</param>
+    /// <returns>The intermediate population.</returns>
+    public static List<Genotype> CustomizeIntermediatePopSizeSelectionOperator(List<Genotype> currentPopulation)
+    {
+        List<Genotype> intermediatePopulation = new List<Genotype>();
+
+        if (IntermediatePopulationSelectionSize < currentPopulation.Count)
+        {
+            return DefaultSelectionOperator(currentPopulation);
+        }
+
+        for (int i = 0; i < IntermediatePopulationSelectionSize; i++)
+        {
+            intermediatePopulation.Add(currentPopulation[i]);
+        }
 
         return intermediatePopulation;
     }

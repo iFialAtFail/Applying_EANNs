@@ -26,6 +26,8 @@ public class EvolutionManager : MonoBehaviour
     // Whether or not the results of each generation shall be written to file, to be set in Unity Editor
     [SerializeField]
     private bool SaveStatistics = false;
+
+    [SerializeField]
     private string statisticsFileName;
 
     // How many of the first to finish the course should be saved to file, to be set in Unity Editor
@@ -44,6 +46,9 @@ public class EvolutionManager : MonoBehaviour
     // Whether to use elitist selection or remainder stochastic sampling, to be set in Unity Editor
     [SerializeField]
     private bool ElitistSelection = false;
+
+    [SerializeField]
+    private int IntermediatePopSize = 4;
 
     // Topology of the agent's FNN, to be set in Unity Editor
     [SerializeField]
@@ -99,6 +104,7 @@ public class EvolutionManager : MonoBehaviour
 
         //Setup genetic algorithm
         geneticAlgorithm = new GeneticAlgorithm((uint) nn.WeightCount, (uint) PopulationSize);
+        GeneticAlgorithm.IntermediatePopulationSelectionSize = IntermediatePopSize;
         genotypesSaved = 0;
 
         geneticAlgorithm.Evaluation = StartEvaluation;
