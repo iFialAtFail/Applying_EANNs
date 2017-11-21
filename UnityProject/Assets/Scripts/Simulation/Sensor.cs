@@ -19,8 +19,8 @@ public class Sensor : MonoBehaviour
     private SpriteRenderer Cross;
 
     // Max and min readings
-    private const float MAX_DIST = 10f;
-    private const float MIN_DIST = 0.01f;
+    protected float MAX_DIST = 10f;
+    protected float MIN_DIST = 0.01f;
 
     /// <summary>
     /// The current sensor readings in percent of maximum distance.
@@ -33,7 +33,7 @@ public class Sensor : MonoBehaviour
     #endregion
 
     #region Constructors
-    void Start ()
+    virtual protected void Start ()
     {
         Cross.gameObject.SetActive(true);
 	}
@@ -76,4 +76,5 @@ public class Sensor : MonoBehaviour
         Cross.gameObject.SetActive(true);
     }
     #endregion
+
 }
