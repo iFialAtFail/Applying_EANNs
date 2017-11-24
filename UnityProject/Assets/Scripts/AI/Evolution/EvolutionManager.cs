@@ -47,6 +47,13 @@ public class EvolutionManager : MonoBehaviour
     [SerializeField]
     private bool ElitistSelection = false;
 
+    // Changes mutation rate during the mutation phase
+    [SerializeField]
+    private float MutationAmount = 2.0f;
+
+    [SerializeField]
+    private float MutationProb = 0.3f;
+
     [SerializeField]
     private int IntermediatePopSize = 4;
 
@@ -315,7 +322,7 @@ public class EvolutionManager : MonoBehaviour
         for (int i = 2; i < newPopulation.Count; i++)
         {
             if (randomizer.NextDouble() < GeneticAlgorithm.DefMutationPerc)
-                GeneticAlgorithm.MutateGenotype(newPopulation[i], GeneticAlgorithm.DefMutationProb, GeneticAlgorithm.DefMutationAmount);
+                GeneticAlgorithm.MutateGenotype(newPopulation[i], MutationProb, MutationAmount);
         }
     }
 
