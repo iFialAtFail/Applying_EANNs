@@ -76,4 +76,5 @@ public class Sensor : MonoBehaviour
         Cross.gameObject.SetActive(true);
     }
     #endregion
+
 }
