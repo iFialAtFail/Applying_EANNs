@@ -23,6 +23,8 @@ public class UIController : MonoBehaviour
 
     private UISimulationController simulationUI;
     private UIStartMenuController startMenuUI;
+
+    public GameObject menuPanel;
     #endregion
 
     #region Constructors
@@ -49,4 +51,13 @@ public class UIController : MonoBehaviour
         simulationUI.Target = target;
     }
     #endregion
+
+    public void MenuPressed()
+    {
+        if (menuPanel != null)
+        {
+            bool isactive = menuPanel.activeInHierarchy;
+            menuPanel.SetActive(!isactive);
+        }
+    }
 }
