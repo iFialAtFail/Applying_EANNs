@@ -131,6 +131,38 @@ public class NeuralLayer
     }
 
     /// <summary>
+    /// Processes the given inputs using the current weights to the next layer.
+    /// </summary>
+    /// <param name="inputs">The inputs to be processed.</param>
+    /// <returns>The calculated outputs.</returns>
+    public double[] ProcessInputs(double[] inputs, ActivationFunction activationFn)
+    {
+        //Check arguments
+        if (inputs.Length != NeuronCount)
+            throw new ArgumentException("Given xValues do not match layer input count.");
+
+        //Calculate sum for each neuron from weighted inputs and bias
+        double[] sums = new double[OutputCount];
+        //Add bias (always on) neuron to inputs
+        double[] biasedInputs = new double[NeuronCount + 1];
+        inputs.CopyTo(biasedInputs, 0);
+        biasedInputs[inputs.Length] = 1.0;
+
+        for (int j = 0; j < this.Weights.GetLength(1); j++)
+            for (int i = 0; i < this.Weights.GetLength(0); i++)
+                sums[j] += biasedInputs[i] * Weights[i, j];
+
+        //Apply activation function to sum, if set
+        if (activationFn != null)
+        {
+            for (int i = 0; i < sums.Length; i++)
+                sums[i] = activationFn(sums[i]);
+        }
+
+        return sums;
+    }
+
+    /// <summary>
     /// Copies this NeuralLayer including its weights.
     /// </summary>
     /// <returns>A deep copy of this NeuralLayer</returns>

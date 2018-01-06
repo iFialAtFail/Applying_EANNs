@@ -75,8 +75,17 @@ public class NeuralNetwork
 
         //Process inputs by propagating values through all layers
         double[] outputs = inputs;
-        foreach (NeuralLayer layer in Layers)
-            outputs = layer.ProcessInputs(outputs);
+        for (int i = 0; i < Layers.Length; i++)
+        {
+            if (i == Layers.Length - 1)
+            {
+                outputs = Layers[i].ProcessInputs(outputs, MathHelper.SoftSignFunction);
+                continue;
+            }
+            outputs = Layers[i].ProcessInputs(outputs, MathHelper.RectifiedLinearUnitFunction);
+        }
+        //foreach (NeuralLayer layer in Layers)
+        //    outputs = layer.ProcessInputs(outputs);
 
         return outputs;
         
