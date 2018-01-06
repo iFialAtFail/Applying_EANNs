@@ -62,8 +62,18 @@ public static class MathHelper
         {
             return xValue;
         }
+    }
 
-
+    public static double LeakyReLUFunction(double xValue)
+    {
+        if (xValue < 0)
+        {
+            return (xValue * 0.01);
+        }
+        else
+        {
+            return xValue;
+        }
     }
     #endregion
     #endregion
