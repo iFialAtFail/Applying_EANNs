@@ -46,6 +46,25 @@ public static class MathHelper
     {
         return xValue / (1 + Math.Abs(xValue));
     }
+
+    /// <summary>
+    /// The rectified linear unit function.
+    /// </summary>
+    /// <param name="xValue"></param>
+    /// <returns></returns>
+    public static double RectifiedLinearUnitFunction(double xValue)
+    {
+        if (xValue < 0)
+        {
+            return 0.0;
+        }
+        else
+        {
+            return xValue;
+        }
+
+
+    }
     #endregion
     #endregion
 }

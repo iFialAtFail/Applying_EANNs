@@ -28,7 +28,4 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-/UnityProject/.vs/UnityProject/v15/Server/sqlite3/storage.ide-wal
-/UnityProject/.vs/UnityProject/v15/Server/sqlite3/storage.ide-shm
-/UnityProject/.vs/UnityProject/v15/Server/sqlite3/storage.ide
-/UnityProject/.vs/UnityProject/v15/Server/sqlite3/db.lock
+/UnityProject/.collabignore
