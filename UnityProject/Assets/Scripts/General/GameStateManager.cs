@@ -20,6 +20,12 @@ public class GameStateManager : MonoBehaviour
     [SerializeField]
     public string TrackName;
 
+    [SerializeField]
+    private bool shouldUseSerializedCarFile = false;
+
+    [SerializeField]
+    private string[] pathsToSerializedCarFile;
+
     /// <summary>
     /// The UIController object.
     /// </summary>
@@ -58,7 +64,14 @@ public class GameStateManager : MonoBehaviour
     void Start ()
     {
         TrackManager.Instance.BestCarChanged += OnBestCarChanged;
-        EvolutionManager.Instance.StartEvolution();
+        if (shouldUseSerializedCarFile)
+        {
+            EvolutionManager.Instance.StartCarWithBrain(pathsToSerializedCarFile);
+        }
+        else
+        {
+            EvolutionManager.Instance.StartEvolution();
+        }
 	}
     #endregion
 

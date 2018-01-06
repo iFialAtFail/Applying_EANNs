@@ -57,6 +57,27 @@ public class EvolutionManager : MonoBehaviour
     [SerializeField]
     private int IntermediatePopSize = 4;
 
+    public void StartCarWithBrain(string[] pathToSerializedCarFile)
+    {
+        Genotype[] genotypes = new Genotype[pathToSerializedCarFile.Length];
+        for (int i = 0; i < genotypes.Length; i++)
+        {
+            genotypes[i] = Genotype.LoadFromFile(pathToSerializedCarFile[i]);
+        }
+        //var genotype = Genotype.LoadFromFile(pathToSerializedCarFile);
+        TrackManager.Instance.SetCarAmount(genotypes.Length);
+        IEnumerator<CarController> carsEnum = TrackManager.Instance.GetCarEnumerator();
+        for (int i = 0; i < genotypes.Length; i++)
+        {
+            if (carsEnum.MoveNext())
+            {
+                carsEnum.Current.Agent = new Agent(genotypes[i], MathHelper.SoftSignFunction, FNNTopology);
+            }
+        }
+        
+            
+    }
+
     // Topology of the agent's FNN, to be set in Unity Editor
     [SerializeField]
     private uint[] FNNTopology;

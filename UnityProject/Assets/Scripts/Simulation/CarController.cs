@@ -3,6 +3,7 @@
 
 #region Includes
 using UnityEngine;
+using System.Collections.Generic;
 #endregion
 
 /// <summary>
@@ -26,7 +27,7 @@ public class CarController : MonoBehaviour
 
     // Maximum delay in seconds between the collection of two checkpoints until this car dies.
     private const float MAX_CHECKPOINT_DELAY = 7;
-
+    private long count = 0;
     /// <summary>
     /// The underlying AI agent of this car.
     /// </summary>
@@ -129,6 +130,23 @@ public class CarController : MonoBehaviour
             sensorOutput[sensorOutput.Length - 1] = Movement.Velocity;//Might need to normallize this data.
             double[] controlInputs = Agent.FNN.ProcessInputs(sensorOutput);
             Movement.SetInputs(controlInputs);
+        }
+        else
+        {
+            if (++count % 20 == 0)
+            {
+                List<double> data = new List<double>();
+                //Get readings from sensors
+                double[] sensorOutput = new double[sensors.Length + 1];
+                for (int i = 0; i < sensors.Length - 1; i++)
+                    data.Add(sensors[i].Output);
+                foreach (var item in CurrentControlInputs)
+                {
+                    data.Add(item);
+                }
+                CaptureUserData.addDataToLog(data.ToArray());
+                if (count > 10000) count = 0;
+            }
         }
 
         if (timeSinceLastCheckpoint > MAX_CHECKPOINT_DELAY)
